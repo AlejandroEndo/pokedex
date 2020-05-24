@@ -5,6 +5,7 @@ class Pokemon {
   int weight;
   int height;
   int base_experience;
+  String url;
   String name;
   String location_area_encounters;
   List moves;
@@ -17,6 +18,7 @@ class Pokemon {
   Map<String, dynamic> species;
   Map<String, dynamic> sprites;
   Pokemon({
+    this.url,
     this.abilities,
     this.base_experience,
     this.forms,
@@ -38,6 +40,7 @@ class Pokemon {
 
   Map toJson() => {
         'id': id,
+        'url': url,
         'name': name,
         'forms': forms,
         'moves': moves,
@@ -59,6 +62,7 @@ class Pokemon {
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     return Pokemon(
       id: json['id'],
+      url: json['url'],
       name: json['name'],
       forms: json['forms'],
       moves: json['moves'],

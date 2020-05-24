@@ -1,7 +1,7 @@
 name: pokedex
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -15,6 +15,7 @@ dependencies:
   http: ^0.12.1
   cached_network_image: ^2.2.0+1
   shared_preferences: ^0.5.7+2
+  flutter_svg: ^0.17.4
 
 dev_dependencies:
   flutter_test:
@@ -22,3 +23,19 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/svg/
+    - assets/svg/types_logos/
+  #  - assets/img/
+  #fonts:
+  # - family: Montserrat
+  #   fonts:
+  #     - asset: assets/fonts/Montserrat/Montserrat-Black.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-ExtraBold.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-ExtraLight.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+  #     - asset: assets/fonts/Montserrat/Montserrat-Thin.ttf
