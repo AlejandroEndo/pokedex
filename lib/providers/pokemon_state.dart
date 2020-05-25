@@ -6,9 +6,14 @@ import 'package:pokedex/api/pokemon_api.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/utils/poke_cache.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PokemonState with ChangeNotifier {
   PokemonApi api = PokemonApi();
+
+  PokemonState() {
+    PokeCache.clearCache();
+  }
 
   Future<AsyncSnapshot<Response>> getPokemons() async {
     Response response;

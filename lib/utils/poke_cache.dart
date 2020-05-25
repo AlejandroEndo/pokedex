@@ -4,8 +4,15 @@ import 'package:pokedex/models/pokemon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PokeCache {
+  static Future<void> clearCache()async{
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+    return null;
+  }
+
   static Future<void> setPokemon(String id, String data) async {
     final preferences = await SharedPreferences.getInstance();
+    preferences.clear();
     await preferences.setString(id, data);
     return null;
   }

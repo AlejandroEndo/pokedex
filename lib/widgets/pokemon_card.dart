@@ -161,8 +161,9 @@ class _PokemonCardState extends State<PokemonCard> {
                         tag: pokemon.id,
                         child: CachedNetworkImage(
                           fit: BoxFit.contain,
-                          imageUrl: pokemon.sprites['front_default'] ??
-                              'https://i.pinimg.com/236x/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f--sticker-vinyl-car-decals.jpg',
+                          imageUrl: '${Constants.POKERES}/${pokemon.id}.png',
+                          // imageUrl: widget.pokemon.sprites['front_default'] ??
+                          //     'https://i.pinimg.com/236x/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f--sticker-vinyl-car-decals.jpg',
                           placeholder: (context, url) =>
                               new CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
