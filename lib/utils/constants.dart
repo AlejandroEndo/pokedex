@@ -6,7 +6,6 @@ const String POKEDEX = 'Pokédex';
 const String POKEDEX_CONTENT =
     'Search for Pokémon by name or using the national Pokédex number.';
 const String SEARCH_HINT = 'What Pokémon are you looking for?';
-
 Map<String, Color> typeColor = {
   'dark': Color(0xff705746),
   'dragon': Color(0xff6f35fc),
@@ -35,4 +34,5 @@ const Map<String, String> ASSETS = {
 
 const String URL = 'https://pokeapi.co/api/v2';
 const String POKE_API = '$URL/pokemon';
+const String POKERES = 'https://pokeres.bastionbot.org/images/pokemon';
 
