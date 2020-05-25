@@ -4,21 +4,18 @@ import 'package:http/http.dart' as http;
 import 'package:pokedex/utils/constants.dart' as Constants;
 
 class PokemonApi {
-  Future<Map<String, dynamic>> getPokemons() async {
+  Future<http.Response> getPokemons() async {
     http.Response response = await http.get(Constants.POKE_API);
-    Map<String, dynamic> responseBody = jsonDecode(response.body);
-    return responseBody;
+    return response;
   }
 
-  Future<Map<String, dynamic>> getPokemon(int id) async {
+  Future<http.Response> getPokemon(String id) async {
     http.Response response = await http.get('${Constants.POKE_API}/$id');
-    Map<String, dynamic> responseBody = jsonDecode(response.body);
-    return responseBody;
+    return response;
   }
 
-  Future<Map<String, dynamic>> customSearch(String url) async {
+  Future<http.Response> customSearch(String url) async {
     http.Response response = await http.get(url);
-    Map<String, dynamic> responseBody = jsonDecode(response.body);
-    return responseBody;
+    return response;
   }
 }

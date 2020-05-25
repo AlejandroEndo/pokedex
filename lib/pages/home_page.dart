@@ -16,11 +16,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: http.get(Constants.POKE_API),
+        // future: http.get(Constants.POKE_API),
+        future: context.watch<PokemonState>().getPokemons(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> res = jsonDecode(snapshot.data.body);
+            Map<String, dynamic> res = jsonDecode(snapshot.data.data.body);
             return Container(
+              width: MediaQuery.of(context).size.width,
               color: Colors.white,
               child: CustomScrollView(
                 slivers: <Widget>[

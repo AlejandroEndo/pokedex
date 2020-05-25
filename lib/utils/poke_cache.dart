@@ -4,20 +4,28 @@ import 'package:pokedex/models/pokemon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PokeCache {
-
-  static Future<void> setPokemon(Pokemon pokemon)async{
+  static Future<void> setPokemon(String id, String data) async {
     final preferences = await SharedPreferences.getInstance();
-    String pokejson = jsonEncode(pokemon);
-    await preferences.setString('${pokemon.id}', pokejson);
+    await preferences.setString(id, data);
+    return null;
   }
 
-  static Future<Pokemon> getPokemon(int id)async{
+  static Future<String> getPokemons() async {
     final preferences = await SharedPreferences.getInstance();
-    String pokejson = preferences.getString('$id') ?? '';
-    if(pokejson.isEmpty) return null;
-    Map<String, dynamic> pokeMap = jsonDecode(pokejson);
-    Pokemon pokemon = Pokemon.fromJson(pokeMap);
-    return pokemon;
+    String result = preferences.getString('pokemons') ?? '';
+    return result;
+  }
+
+  static Future<void> setPokemons(String pokemons) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setString('pokemons', pokemons);
+    return null;
+  }
+
+  static Future<String> getPokemon(String id) async {
+    final preferences = await SharedPreferences.getInstance();
+    String pokejson = preferences.getString(id) ?? '';
+    return pokejson;
   }
 
   static Future<bool> setToken(String token) async {

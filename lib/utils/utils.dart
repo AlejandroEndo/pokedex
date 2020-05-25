@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pokedex/widgets/pokemon_type.dart';
 
 class Utils {
   // Return a darker color.
@@ -28,9 +29,18 @@ class Utils {
   }
 
   // set the 0s on int and return it as a string.
-  String pokedexFormat(int pokeid){
+  String pokedexFormat(int pokeid) {
     String converted = pokeid.toString();
-    if(converted.length == 3) return '#converted';
+    if (converted.length == 3) return '#converted';
     return converted.length < 2 ? '#00$converted' : '#0$converted';
+  }
+
+  // Build the types widgets of a List<Map> of types
+  List<Widget> buildTypes(List<dynamic> types) {
+    List<Widget> _types = [];
+    for (int i = 0; i < types.length; i++) {
+      _types.insert(0, Pokemontype(type: types[i]['type']['name']));
+    }
+    return _types;
   }
 }

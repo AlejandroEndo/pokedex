@@ -18,19 +18,18 @@ class MainHeader implements SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      padding:
-          EdgeInsets.only(top: 50.0, left: 15.0, right: 15.0, bottom: 30.0),
+      padding: EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0, bottom: 30.0),
       color: Colors.white,
       child: Stack(
         children: <Widget>[
           Positioned(
             bottom: 0,
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width / 2,
+            height: MediaQuery.of(context).size.width,
             child: SvgPicture.asset(
               Constants.ASSETS['flatBall'],
               color: Colors.grey[200],
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.fill,
             ),
           ),
           Positioned(
@@ -52,7 +51,8 @@ class MainHeader implements SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            top: 0,
+            top: 50,
+            left: 15.0,
             child: Text(
               Constants.POKEDEX,
               style: TextStyle(
@@ -63,7 +63,8 @@ class MainHeader implements SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            top: 50,
+            top: 100,
+            left: 20.0,
             width: (MediaQuery.of(context).size.width / 3) * 2,
             child: Text(
               Constants.POKEDEX_CONTENT,
@@ -106,7 +107,6 @@ class MainHeader implements SliverPersistentHeaderDelegate {
 
   double scrollOpacity(double shrinkOffset) {
     double a = 1.0 - max(0.0, shrinkOffset) / (maxExtent / 3);
-    print(a);
     return a < 0.0 ? 0.0 : a;
   }
 

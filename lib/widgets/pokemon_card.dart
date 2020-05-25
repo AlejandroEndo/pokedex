@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/pages/pokemon_page.dart';
 import 'package:pokedex/utils/utils.dart';
 import 'package:pokedex/widgets/pokemon_type.dart';
 import 'package:provider/provider.dart';
@@ -23,138 +24,155 @@ class _PokemonCardState extends State<PokemonCard> {
   Pokemon pokemon;
   String defaultType;
   Color color;
-  List<Widget> _buildTypes(BuildContext context, List<dynamic> types) {
-    List<Widget> _types = [];
-    for (int i = 0; i < types.length; i++) {
-      _types.add(Pokemontype(type: types[i]['type']['name']));
-    }
-    return _types;
-  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: http.get(widget.pokemonUrl),
+      future: context
+          .watch<PokemonState>()
+          .getPokemon(widget.pokemonUrl), //http.get(widget.pokemonUrl),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> res = jsonDecode(snapshot.data.body);
+          Map<String, dynamic> res = jsonDecode(snapshot.data.data.body);
           pokemon = Pokemon.fromJson(res);
           defaultType = pokemon.types[pokemon.types.length - 1]['type']['name'];
-          return Container(
-            height: 200.0,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  top: 50,
-                  height: 150.0,
-                  width: MediaQuery.of(context).size.width,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 15.0,
-                      vertical: 8.0,
-                    ),
-                    padding: EdgeInsets.all(5.0),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Constants.typeColor[defaultType],
-                          Utils().darken(
+          return Material(
+            color: Colors.transparent,
+            child: Container(
+              height: 200.0,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    top: 50,
+                    height: 150.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 15.0,
+                        vertical: 8.0,
+                      ),
+                      padding: EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
                             Constants.typeColor[defaultType],
-                            0.05,
+                            Utils().darken(
+                              Constants.typeColor[defaultType],
+                              0.05,
+                            ),
+                          ],
+                          stops: [0.0, 1.0],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: Constants.typeColor[defaultType]
+                                .withOpacity(0.3),
+                            offset: Offset(0, -10),
+                            blurRadius: 15.0,
+                            spreadRadius: 5,
                           ),
                         ],
-                        stops: [0.0, 1.0],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color:
-                              Constants.typeColor[defaultType].withOpacity(0.3),
-                          offset: Offset(0, -10),
-                          blurRadius: 15.0,
-                          spreadRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          bottom: 0.0,
-                          right: 15.0,
-                          width: 150,
-                          height: 150,
-                          child: SvgPicture.asset(
-                            Constants.ASSETS['flatBall'],
-                            color: Colors.white.withOpacity(0.1),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => PokemonPage(
+                                  pokemon: pokemon, defaultType: defaultType),
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          bottom: MediaQuery.of(context).size.width / 15,
-                          left: 150.0,
-                          width: MediaQuery.of(context).size.width / 5,
-                          height: MediaQuery.of(context).size.width / 5,
-                          child: SvgPicture.asset(
-                            Constants.ASSETS['dots'],
-                            color: Colors.white,
+                          splashColor: Utils().lighten(
+                            Constants.typeColor[defaultType],
                           ),
-                        ),
-                        Positioned(
-                          top: 15.0,
-                          bottom: 10.0,
-                          left: 20.0,
-                          right: 20.0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Stack(
                             children: <Widget>[
-                              Text(
-                                Utils().pokedexFormat(pokemon.id),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.w400,
+                              Positioned(
+                                bottom: 0.0,
+                                right: 15.0,
+                                width: 150,
+                                height: 150,
+                                child: SvgPicture.asset(
+                                  Constants.ASSETS['flatBall'],
+                                  color: Colors.white.withOpacity(0.1),
                                 ),
                               ),
-                              Text(
-                                Utils().capitalize(pokemon.name),
-                                style: TextStyle(
+                              Positioned(
+                                bottom: MediaQuery.of(context).size.width / 15,
+                                left: 150.0,
+                                width: MediaQuery.of(context).size.width / 5,
+                                height: MediaQuery.of(context).size.width / 5,
+                                child: SvgPicture.asset(
+                                  Constants.ASSETS['dots'],
                                   color: Colors.white,
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Row(
-                                children: _buildTypes(context, pokemon.types),
+                              Positioned(
+                                top: 15.0,
+                                bottom: 10.0,
+                                left: 20.0,
+                                right: 20.0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      Utils().pokedexFormat(pokemon.id),
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    Text(
+                                      Utils().capitalize(pokemon.name),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Row(
+                                      children:
+                                          Utils().buildTypes(pokemon.types),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  right: 15.0,
-                  top: 0.0,
-                  child: Container(
-                    height: 150.0,
-                    child: CachedNetworkImage(
-                      fit: BoxFit.contain,
-                      imageUrl: pokemon.sprites['front_default'] ??
-                          'https://i.pinimg.com/236x/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f--sticker-vinyl-car-decals.jpg',
-                      placeholder: (context, url) =>
-                          new CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
+                  Positioned(
+                    right: 15.0,
+                    top: 0.0,
+                    child: Container(
+                      height: 150.0,
+                      child: Hero(
+                        tag: pokemon.id,
+                        child: CachedNetworkImage(
+                          fit: BoxFit.contain,
+                          imageUrl: pokemon.sprites['front_default'] ??
+                              'https://i.pinimg.com/236x/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f--sticker-vinyl-car-decals.jpg',
+                          placeholder: (context, url) =>
+                              new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         } else {

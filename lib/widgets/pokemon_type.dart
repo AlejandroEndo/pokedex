@@ -8,7 +8,6 @@ class Pokemontype extends StatelessWidget {
   Pokemontype({Key key, @required this.type}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(type);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
       margin: EdgeInsets.all(5.0),
