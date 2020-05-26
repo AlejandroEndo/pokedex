@@ -17,25 +17,44 @@ class Pokemon {
   List game_indices;
   Map<String, dynamic> species;
   Map<String, dynamic> sprites;
+  // SPECIES
+  List flavor_text_entries;
+  Map<String, dynamic> evolution_chain;
+  Map<String, dynamic> evolves_from_species;
+  List genera;
+  Map<String, dynamic> generation;
+  Map<String, dynamic> growth_rate;
+  Map<String, dynamic> habitat;
+  int base_happiness;
+  int capture_rate;
   Pokemon({
-    this.url,
-    this.abilities,
-    this.base_experience,
-    this.forms,
-    this.game_indices,
-    this.height,
-    this.held_items,
     this.id,
-    this.is_default,
-    this.location_area_encounters,
-    this.moves,
+    this.url,
     this.name,
+    this.moves,
+    this.forms,
     this.order,
-    this.species,
-    this.sprites,
     this.stats,
     this.types,
+    this.genera,
     this.weight,
+    this.height,
+    this.species,
+    this.habitat,
+    this.sprites,
+    this.abilities,
+    this.held_items,
+    this.is_default,
+    this.generation,
+    this.growth_rate,
+    this.game_indices,
+    this.capture_rate,
+    this.base_happiness,
+    this.base_experience,
+    this.evolution_chain,
+    this.flavor_text_entries,
+    this.evolves_from_species,
+    this.location_area_encounters,
   });
 
   Map toJson() => {
@@ -80,5 +99,19 @@ class Pokemon {
       base_experience: json['base_experience'],
       location_area_encounters: json['location_area_encounters'],
     );
+  }
+
+  factory Pokemon.specieFromJson(Map<String, dynamic> json, Pokemon pokemon) {
+    pokemon
+      ..genera = json['genera']
+      ..habitat = json['habitat']
+      ..generation = json['generation']
+      ..growth_rate = json['growth_rate']
+      ..capture_rate = json['capture_rate']
+      ..base_happiness = json['base_happiness']
+      ..evolution_chain = json['evolution_chain']
+      ..flavor_text_entries = json['flavor_text_entries']
+      ..evolves_from_species = json['evolves_from_species'];
+    return pokemon;
   }
 }

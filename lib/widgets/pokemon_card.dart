@@ -32,7 +32,7 @@ class _PokemonCardState extends State<PokemonCard> {
     return FutureBuilder(
       future: context
           .watch<PokemonState>()
-          .getPokemon(widget.pokemonUrl), //http.get(widget.pokemonUrl),
+          .getPokemonByUrl(widget.pokemonUrl),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> res = jsonDecode(snapshot.data.data.body);

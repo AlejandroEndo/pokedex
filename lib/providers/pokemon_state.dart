@@ -27,7 +27,7 @@ class PokemonState with ChangeNotifier {
     return AsyncSnapshot<Response>.withData(ConnectionState.done, response);
   }
 
-  Future<AsyncSnapshot<Response>> getPokemon(String url) async {
+  Future<AsyncSnapshot<Response>> getPokemonByUrl(String url) async {
     Response response;
     List<String> urlList = url.split('/');
     String id = urlList[urlList.length - 2];
@@ -40,21 +40,16 @@ class PokemonState with ChangeNotifier {
     }
     return AsyncSnapshot<Response>.withData(ConnectionState.done, response);
   }
-//
-  // Future<Pokemon> getPokemon(int id)async{
-  //   Map<String,dynamic>result = await api.getPokemon(id);
-  //   Pokemon pokemon = Pokemon.fromJson(result);
-  //   notifyListeners();
-  //   return pokemon;
-  // }
-//
-  // Future<Pokemon> getPokemon(String url)async{
-  //   Map<String, dynamic> result = await api.customSearch(url);
-  //   Pokemon pokemon = Pokemon.fromJson(result);
-  // return pokemon;
-  // }
-//
-  // Future<Pokemon> buildPokemonList(Map<String, dynamic>pokeData)async{
-  // String token = await PokeCache.getPokemon(pokeData['']);
-  // }
+
+  Future<AsyncSnapshot<Response>> getPokemonSpecieById(int id) async {
+    Response response;
+    String jsonResult = await PokeCache.getPokemonSpecie(id);
+    if (jsonResult.isEmpty) {
+      response = await api.getPokemonSpecie(id);
+      await PokeCache.setPokemonSpecie(id, response.body);
+    } else {
+      response = Response(jsonResult, 200);
+    }
+    return AsyncSnapshot<Response>.withData(ConnectionState.done, response);
+  }
 }

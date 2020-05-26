@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/providers/pokemon_state.dart';
+import 'package:pokedex/widgets/pokemon_content.dart';
+import 'package:provider/provider.dart';
 
 import 'package:pokedex/utils/constants.dart' as Constants;
 import 'package:pokedex/utils/utils.dart';
@@ -94,8 +99,6 @@ class _PokemonPageState extends State<PokemonPage> {
                   child: CachedNetworkImage(
                     fit: BoxFit.contain,
                     imageUrl: '${Constants.POKERES}/${widget.pokemon.id}.png',
-                    // imageUrl: widget.pokemon.sprites['front_default'] ??
-                    //     'https://i.pinimg.com/236x/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f--sticker-vinyl-car-decals.jpg',
                     placeholder: (context, url) =>
                         new CircularProgressIndicator(),
                     errorWidget: (context, url, error) => new Icon(Icons.error),
@@ -104,48 +107,12 @@ class _PokemonPageState extends State<PokemonPage> {
               ),
             ),
             Positioned(
-              top: 0,
-              height: MediaQuery.of(context).size.height / 3,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    Utils().pokedexFormat(widget.pokemon.id),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  Row(
-                    children: Utils().buildTypes(widget.pokemon.types),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
               bottom: 0.0,
               height: (MediaQuery.of(context).size.height / 3) * 2,
               width: MediaQuery.of(context).size.width,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                ),
-                child: ListView(
-                  children: <Widget>[
-                    Text(
-                      Utils().capitalize(widget.pokemon.name),
-                      style: TextStyle(
-                        color: Constants.typeColor[widget.defaultType],
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+              child: PokemonContent(
+                defaultType: widget.defaultType,
+                pokemon: widget.pokemon,
               ),
             ),
           ],

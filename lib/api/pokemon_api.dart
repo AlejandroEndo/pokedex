@@ -14,6 +14,11 @@ class PokemonApi {
     return response;
   }
 
+  Future<http.Response> getPokemonSpecie(int id) async{
+    http.Response response = await http.get('${Constants.POKE_SPECIES_API}/$id');
+    return response;
+  }
+
   Future<http.Response> customSearch(String url) async {
     http.Response response = await http.get(url);
     return response;

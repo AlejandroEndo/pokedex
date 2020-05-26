@@ -43,4 +43,29 @@ class Utils {
     }
     return _types;
   }
+
+  // Return the genra into the correct language.
+  String getPokemonGeneraGenus(List genera, String language) {
+    String genus = '';
+    for (int i = 0; i < genera.length; i++) {
+      if (genera[i]['language']['name'] == language) {
+        genus = genera[i]['genus'];
+        return genus;
+      }
+    }
+    return genus;
+  }
+
+  // Return the FlavorText into the correct language.
+  String getPokemonFlavorText(List flavorTextEntries, String language) {
+    String flavorText = '';
+    for (int i = 0; i < flavorTextEntries.length; i++) {
+      if (flavorTextEntries[i]['language']['name'] == language) {
+        flavorText = flavorTextEntries[i]['flavor_text'];
+        flavorText = flavorText.replaceAll('\n', ' ');
+        return flavorText;
+      }
+    }
+    return flavorText;
+  }
 }
