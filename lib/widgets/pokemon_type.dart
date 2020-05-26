@@ -16,7 +16,6 @@ class Pokemontype extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(5.0),
         ),
         border: Border.all(
-          //  color: Color(0xffD7D7D7),
           color: Colors.transparent
         ),
       ),

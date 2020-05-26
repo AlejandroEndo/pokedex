@@ -4,16 +4,15 @@ import 'package:pokedex/models/pokemon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PokeCache {
-  static Future<void> clearCache()async{
+  static Future<void> clearCache() async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.clear();
     return null;
   }
 
-  static Future<void> setPokemon(String id, String data) async {
+  static Future<void> setPokemons(String pokemons) async {
     final preferences = await SharedPreferences.getInstance();
-    preferences.clear();
-    await preferences.setString(id, data);
+    await preferences.setString('pokemons', pokemons);
     return null;
   }
 
@@ -23,9 +22,9 @@ class PokeCache {
     return result;
   }
 
-  static Future<void> setPokemons(String pokemons) async {
+  static Future<void> setPokemon(String id, String data) async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setString('pokemons', pokemons);
+    await preferences.setString(id, data);
     return null;
   }
 
@@ -35,23 +34,15 @@ class PokeCache {
     return pokejson;
   }
 
-  static Future<bool> setToken(String token) async {
+  static Future<void> setPokemonSpecie(int id, String data) async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setString("token", token);
-    return true;
+    await preferences.setString('specie_$id', data);
+    return null;
   }
 
-  static Future<String> getToken() async {
+  static Future<String> getPokemonSpecie(int id) async {
     final preferences = await SharedPreferences.getInstance();
-    final String token = preferences.getString("token") ?? "";
-    return token;
+    String pokejson = preferences.getString('specie_$id') ?? '';
+    return pokejson;
   }
-
-  static Future<bool> deleteToken() async {
-    final preferences = await SharedPreferences.getInstance();
-    await preferences.remove("token");
-    return true;
-  }
-
-  // static Future<Pokemon>
 }

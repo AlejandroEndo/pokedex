@@ -11,7 +11,7 @@ Map<String, Color> typeColor = {
   'dragon': Color(0xff6f35fc),
   'electric': Color(0xfff7d02c),
   'fairy': Color(0xffd685ad),
-  'figthing': Color(0xffc22e28),
+  'fighting': Color(0xffc22e28),
   'fire': Color(0xffee8130),
   'flying': Color(0xffa98ff3),
   'ghost': Color(0xff735797),
@@ -33,6 +33,8 @@ const Map<String, String> ASSETS = {
 };
 
 const String URL = 'https://pokeapi.co/api/v2';
-const String POKE_API = '$URL/pokemon-species';
+const String POKE_API = '$URL/pokemon';
+const String ALL_POKEMON_URL = '$POKE_API?limit=807&offset=0';
+const String POKE_SPECIES_API = '$URL/pokemon-species';
 const String POKERES = 'https://pokeres.bastionbot.org/images/pokemon';
 

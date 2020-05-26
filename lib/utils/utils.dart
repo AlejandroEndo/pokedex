@@ -31,7 +31,7 @@ class Utils {
   // set the 0s on int and return it as a string.
   String pokedexFormat(int pokeid) {
     String converted = pokeid.toString();
-    if (converted.length == 3) return '#converted';
+    if (converted.length == 3) return '#$converted';
     return converted.length < 2 ? '#00$converted' : '#0$converted';
   }
 
@@ -42,5 +42,30 @@ class Utils {
       _types.insert(0, Pokemontype(type: types[i]['type']['name']));
     }
     return _types;
+  }
+
+  // Return the genra into the correct language.
+  String getPokemonGeneraGenus(List genera, String language) {
+    String genus = '';
+    for (int i = 0; i < genera.length; i++) {
+      if (genera[i]['language']['name'] == language) {
+        genus = genera[i]['genus'];
+        return genus;
+      }
+    }
+    return genus;
+  }
+
+  // Return the FlavorText into the correct language.
+  String getPokemonFlavorText(List flavorTextEntries, String language) {
+    String flavorText = '';
+    for (int i = 0; i < flavorTextEntries.length; i++) {
+      if (flavorTextEntries[i]['language']['name'] == language) {
+        flavorText = flavorTextEntries[i]['flavor_text'];
+        flavorText = flavorText.replaceAll('\n', ' ');
+        return flavorText;
+      }
+    }
+    return flavorText;
   }
 }
