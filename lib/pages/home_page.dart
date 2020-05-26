@@ -11,12 +11,17 @@ import 'package:http/http.dart' as http;
 import 'package:pokedex/utils/constants.dart' as Constants;
 import 'package:pokedex/providers/pokemon_state.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        // future: http.get(Constants.POKE_API),
         future: context.watch<PokemonState>().getPokemons(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -25,6 +30,7 @@ class HomePage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               color: Colors.white,
               child: CustomScrollView(
+                controller: scrollController,
                 slivers: <Widget>[
                   SliverPersistentHeader(
                     pinned: true,
@@ -54,31 +60,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  // FutureBuilder<Response> _bodyBuilder(BuildContext context) {
-  //   return FutureBuilder(
-  //     // future: http.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=964'),
-  //     future: http.get(Constants.POKE_API),
-  //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.done) {
-  //         Map<String, dynamic> res = jsonDecode(snapshot.data.body);
-  //         return _buildPokemons(context, res['results']);
-  //       } else {
-  //         return Center(child: CircularProgressIndicator());
-  //       }
-  //     },
-  //   );
-  // }
-
-  // _buildPokemons(BuildContext context, List<dynamic> pokemons) {
-  //   return GridView.builder(
-  //     itemCount: pokemons.length,
-  //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //       crossAxisCount: 3,
-  //     ),
-  //     itemBuilder: (BuildContext conttext, int index) {
-  //       return PokemonCard(pokemonUrl: pokemons[index]['url']);
-  //     },
-  //   );
-  // }
 }

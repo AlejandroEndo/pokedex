@@ -31,7 +31,7 @@ class Utils {
   // set the 0s on int and return it as a string.
   String pokedexFormat(int pokeid) {
     String converted = pokeid.toString();
-    if (converted.length == 3) return '#converted';
+    if (converted.length == 3) return '#$converted';
     return converted.length < 2 ? '#00$converted' : '#0$converted';
   }
 

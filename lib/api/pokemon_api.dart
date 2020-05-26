@@ -5,7 +5,7 @@ import 'package:pokedex/utils/constants.dart' as Constants;
 
 class PokemonApi {
   Future<http.Response> getPokemons() async {
-    http.Response response = await http.get(Constants.POKE_API);
+    http.Response response = await http.get(Constants.ALL_POKEMON_URL);
     return response;
   }
 
