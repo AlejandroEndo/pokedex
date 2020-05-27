@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pokedex/models/generic.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/widgets/main_header.dart';
 import 'package:pokedex/widgets/pokemon_card.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // TODO: Scroll controller
   ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
         future: context.watch<PokemonState>().getPokemons(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> res = jsonDecode(snapshot.data.data.body);
+            List<dynamic> pokemons = snapshot.data.data;
             return Container(
               width: MediaQuery.of(context).size.width,
               color: Colors.white,
@@ -44,10 +46,10 @@ class _HomePageState extends State<HomePage> {
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         return PokemonCard(
-                          pokemonUrl: res['results'][index]['url'],
+                          pokemonUrl: pokemons[index].url,
                         );
                       },
-                      childCount: res['results'].length,
+                      childCount: pokemons.length,
                     ),
                   ),
                 ],

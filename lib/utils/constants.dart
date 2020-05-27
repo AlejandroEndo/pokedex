@@ -6,7 +6,10 @@ const String POKEDEX = 'Pokédex';
 const String POKEDEX_CONTENT =
     'Search for Pokémon by name or using the national Pokédex number.';
 const String SEARCH_HINT = 'What Pokémon are you looking for?';
-Map<String, Color> typeColor = {
+const String ABOUT_SUBTITLE_1 = 'Pokédex Data';
+const String ABOUT_SUBTITLE_2 = 'Training';
+
+const Map<String, Color> TYPE_COLOR = {
   'dark': Color(0xff705746),
   'dragon': Color(0xff6f35fc),
   'electric': Color(0xfff7d02c),

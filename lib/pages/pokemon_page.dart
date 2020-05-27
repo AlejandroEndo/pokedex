@@ -13,8 +13,8 @@ import 'package:pokedex/utils/constants.dart' as Constants;
 import 'package:pokedex/utils/utils.dart';
 
 class PokemonPage extends StatefulWidget {
-  Pokemon pokemon;
-  String defaultType;
+  final Pokemon pokemon;
+  final String defaultType;
   PokemonPage({
     Key key,
     @required this.pokemon,
@@ -32,9 +32,9 @@ class _PokemonPageState extends State<PokemonPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Constants.typeColor[widget.defaultType],
+              Constants.TYPE_COLOR[widget.defaultType],
               Utils().darken(
-                Constants.typeColor[widget.defaultType],
+                Constants.TYPE_COLOR[widget.defaultType],
                 0.2,
               ),
             ],
@@ -58,9 +58,9 @@ class _PokemonPageState extends State<PokemonPage> {
                       end: Alignment.topCenter,
                       stops: [0.0, 1.0],
                       colors: <Color>[
-                        Constants.typeColor[widget.defaultType],
+                        Constants.TYPE_COLOR[widget.defaultType],
                         Utils().lighten(
-                            Constants.typeColor[widget.defaultType], 0.1),
+                            Constants.TYPE_COLOR[widget.defaultType], 0.1),
                       ],
                     ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                 ),
@@ -92,19 +92,68 @@ class _PokemonPageState extends State<PokemonPage> {
               top: 0.0,
               height: MediaQuery.of(context).size.height / 3,
               width: MediaQuery.of(context).size.width,
-              child: Container(
-                padding: EdgeInsets.all(30.0),
-                child: Hero(
-                  tag: widget.pokemon.id,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.contain,
-                    imageUrl: '${Constants.POKERES}/${widget.pokemon.id}.png',
-                    placeholder: (context, url) =>
-                        new CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => new Icon(Icons.error),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(30.0),
+                      child: Hero(
+                        tag: widget.pokemon.id,
+                        child: CachedNetworkImage(
+                          fit: BoxFit.contain,
+                          imageUrl:
+                              '${Constants.POKERES}/${widget.pokemon.id}.png',
+                          placeholder: (context, url) =>
+                              new CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          // width: MediaQuery.of(context).size.width / 2,
+                          child: Text(
+                            '${Utils().pokedexFormat(widget.pokemon.id)}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          // width: MediaQuery.of(context).size.width / 2,
+                          child: Text(
+                            Utils().capitalize(widget.pokemon.name),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 50.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: Utils().buildTypes(widget.pokemon.types),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height / 3,
+              child: Column(),
             ),
             Positioned(
               bottom: 0.0,

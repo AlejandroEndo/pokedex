@@ -35,8 +35,7 @@ class _PokemonCardState extends State<PokemonCard> {
           .getPokemonByUrl(widget.pokemonUrl),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> res = jsonDecode(snapshot.data.data.body);
-          pokemon = Pokemon.fromJson(res);
+          pokemon = snapshot.data.data;
           defaultType = pokemon.types[pokemon.types.length - 1]['type']['name'];
           return Material(
             color: Colors.transparent,

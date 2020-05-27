@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/providers/pokemon_state.dart';
 import 'package:pokedex/utils/utils.dart';
+import 'package:pokedex/widgets/abilities_container.dart';
+import 'package:pokedex/widgets/row_table.dart';
+import 'package:pokedex/widgets/subtitle_pokemon.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pokedex/utils/constants.dart' as Constants;
@@ -29,53 +32,56 @@ class _PokemonContentState extends State<PokemonContent> {
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
       child: FutureBuilder(
         future: context
             .watch<PokemonState>()
             .getPokemonSpecieById(widget.pokemon.id),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> res = jsonDecode(snapshot.data.data.body);
-            pokemon = Pokemon.specieFromJson(res, widget.pokemon);
+            pokemon =
+                Pokemon.specieFromJson(snapshot.data.data, widget.pokemon);
             return ListView(
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width / 2,
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
                   child: Text(
-                    Utils().capitalize(pokemon.name),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Constants.typeColor[widget.defaultType],
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Text(
-                    '${Utils().pokedexFormat(pokemon.id)} | ${Utils().getPokemonGeneraGenus(pokemon.genera, 'en')}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: Utils().buildTypes(pokemon.types),
-                ),
-                Text(
                     Utils().getPokemonFlavorText(
                         pokemon.flavor_text_entries, 'en'),
                   ),
-                // Container(
-                //   width: MediaQuery.of(context).size.width / 2,
-                //   child: 
-                // ),
+                ),
+                SubtitlePokemon(
+                  Constants.ABOUT_SUBTITLE_1,
+                  defaultType: widget.defaultType,
+                ),
+                RowTable(
+                  title: 'Species',
+                  child: Text(
+                    Utils().getPokemonGeneraGenus(pokemon.genera, 'en'),
+                  ),
+                ),
+                RowTable(
+                  title: 'Height',
+                  child: Text(
+                    "${Utils().decimeterParser(false, pokemon.height.toDouble())}m (${Utils().decimeterParser(true, pokemon.height.toDouble())})",
+                  ),
+                ),
+                RowTable(
+                  title: 'Weight',
+                  child: Text(
+                    "${Utils().hectogramParser(false, pokemon.weight.toDouble())}kg ${Utils().hectogramParser(true, pokemon.weight.toDouble())}lbs",
+                  ),
+                ),
+                RowTable(
+                  title: 'Abilities',
+                  child: AbilitiesContainer(abilities: pokemon.abilities),
+                ),
+                RowTable(
+                  title: 'Weaknesses',
+                  child: Text(
+                    Utils().getPokemonGeneraGenus(pokemon.genera, 'en'),
+                  ),
+                ),
               ],
             );
           } else {

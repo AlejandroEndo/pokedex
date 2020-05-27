@@ -26,9 +26,9 @@ class PokemonCardPlaceholder extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Constants.typeColor['steel'],
+                    Constants.TYPE_COLOR['steel'],
                     Utils().darken(
-                      Constants.typeColor['steel'],
+                      Constants.TYPE_COLOR['steel'],
                       0.05,
                     ),
                   ],
@@ -39,7 +39,7 @@ class PokemonCardPlaceholder extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 boxShadow: <BoxShadow>[
                   BoxShadow(
-                    color: Constants.typeColor['steel'].withOpacity(0.3),
+                    color: Constants.TYPE_COLOR['steel'].withOpacity(0.3),
                     offset: Offset(0, -10),
                     blurRadius: 15.0,
                     spreadRadius: 5,

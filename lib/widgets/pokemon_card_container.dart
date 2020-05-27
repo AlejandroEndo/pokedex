@@ -30,9 +30,9 @@ class _PokemonCardContainerState extends State<PokemonCardContainer> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Constants.typeColor[widget.defaultType],
+            Constants.TYPE_COLOR[widget.defaultType],
             Utils().darken(
-              Constants.typeColor[widget.defaultType],
+              Constants.TYPE_COLOR[widget.defaultType],
               0.05,
             ),
           ],
@@ -43,7 +43,7 @@ class _PokemonCardContainerState extends State<PokemonCardContainer> {
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Constants.typeColor[widget.defaultType].withOpacity(0.3),
+            color: Constants.TYPE_COLOR[widget.defaultType].withOpacity(0.3),
             offset: Offset(0, -10),
             blurRadius: 15.0,
             spreadRadius: 5,
@@ -60,7 +60,7 @@ class _PokemonCardContainerState extends State<PokemonCardContainer> {
             ),
           ),
           splashColor: Utils().lighten(
-            Constants.typeColor[widget.defaultType],
+            Constants.TYPE_COLOR[widget.defaultType],
           ),
           child: Stack(
             children: <Widget>[

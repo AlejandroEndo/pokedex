@@ -12,7 +12,7 @@ class Pokemontype extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
       margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: Constants.typeColor[type],
+        color: Constants.TYPE_COLOR[type],
         borderRadius: BorderRadius.all(Radius.circular(5.0),
         ),
         border: Border.all(

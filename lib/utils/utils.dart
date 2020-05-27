@@ -68,4 +68,25 @@ class Utils {
     }
     return flavorText;
   }
+
+  // Convert decimeters to meters or foots.
+  String decimeterParser(bool toFoots, double value) {
+    double convertedValue = 0;
+    if (toFoots) {
+      convertedValue = (value / 10) * 3.281;
+      String parsedValue =
+          double.parse((convertedValue).toStringAsFixed(3)).toString();
+      List<String> valueSplit = parsedValue.split('.');
+      return '${valueSplit[0]}\'${valueSplit[1]}\"';
+    } else {
+      convertedValue = value / 10;
+      return double.parse((convertedValue).toStringAsFixed(2)).toString();
+    }
+  }
+
+  // Convert hectograms to kilograms or pounds.
+  String hectogramParser(bool toPounds, double value) {
+    double convertedValue = toPounds ? (value / 10) * 2.205 : value / 10;
+    return double.parse((convertedValue).toStringAsFixed(2)).toString();
+  }
 }
